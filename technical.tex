@@ -37,8 +37,8 @@ define macros via the \texttt {define-fun} command.
 (assert (= (max 4 7) 7))
 \end{verbatim}
 
-However, Z3's API exposes no such command. Our first attempt was to define a
-Racket function to do the same thing:
+Our first attempt to implement this facility for \texttt{z3.rkt} was to define
+a Racket function to do the same thing:
 
 \begin{verbatim}
 (define (smt-max a b)
@@ -49,10 +49,17 @@ Racket function to do the same thing:
 
 This works for smaller macros like \texttt{max}, but in our experience this
 sort of na\"{i}ve substitution can result in final expressions for deeply
-nested functions becoming too large for Z3 to handle\footnote{In theory, we
-could merge common parts of expressions to reduce the number of AST nodes
-generated. In our experiments, this proved to be effective, yet still
-significantly slower than the solution we finally adopted.}
+nested functions becoming too large for Z3 to handle. Consider a function
+\texttt{(f a b)} that uses \texttt{(smt-max a b)} $m$ times. This expression
+will be repeated $m$ times in the expression for \texttt{f}. Now consider a
+function \texttt{g} that uses the value of \texttt{(f 0 1)} $n$ times. The
+expression for \texttt{g} will contain that of \texttt{(f 0 1)} $n$ times, and
+consequently that of \texttt{(smt-max 0 1)} $m n$ times. As the nesting
+increases, we see an exponential blowup in the size of the final
+expression\footnote{We could merge common parts of expressions to reduce the
+number of AST nodes generated. In our experiments, this proved to be quite
+effective, yet still significantly slower than the solution we finally
+adopted.}.
 
 We note, however, that any macro can also be written as a universally
 quantified formula. For example, \texttt{max} can be rewritten in the

@@ -73,9 +73,9 @@ assertions based on generated models. This makes it difficult to build new
 abstractions to enhance functionality.
 
 To overcome these difficulties, we decided to implement an SMT-LIB-like
-interface in a way that allowed for the same power as the C interface while
-appearing naturally integrated into a host language. Since SMT-LIB is {\em
-s-expression}-based, for the host language a Lisp dialect was a natural
+interface to Z3 in a way that allowed for the same power as the C interface
+while appearing naturally integrated into a host language. Since SMT-LIB is
+{\em s-expression}-based, for the host language a Lisp dialect was a natural
 choice. We chose Racket~\cite{racket} for our implementation, \texttt{z3.rkt},
 because of its extensive facilities for implementing new languages~\cite
 {Tobin-Hochstadt:11}, not just for the interface to the solver, but also for
