@@ -1,0 +1,14 @@
+*~
+*.aux
+*.log
+*.out
+*.snm
+*.toc
+*.nav
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.vrb
+*.pdf
+*.sublime-workspace
