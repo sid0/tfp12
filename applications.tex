@@ -86,7 +86,9 @@ reduces to the series of macros defined above up to length \texttt{n}. (At
 this point, the observant reader might have noticed that
 \texttt{smt:define-fun} expands to a universal quantifier as well. However, Z3
 doesn't need MBQI to solve universally quantified assertions equivalent to
-\texttt{define-fun} macros.)
+\texttt{define-fun} macros. The initial example given for \texttt{len} is not
+one such assertion, since it refers to itself and \texttt{define-fun} macros
+aren't permitted to.)
 
 It is easy to define other bounded recursive functions along the same lines
 that reverse lists, concatenate them, filter them on a predicate and much
