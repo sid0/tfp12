@@ -34,7 +34,7 @@ powerful, can also be very slow. In our experience, it is very easy to write a
 quantified formula that Z3's MBQI engine fails to solve in reasonable
 time\footnote{In general, it is hard to deal with quantified formulas
 containing even linear arithmetic, because there is no sound and complete
-decision procedure for them\cite{halpern91}.
+decision procedure for them~\cite{halpern91}.
 
 Z3 has another way to solve quantified assertions, called
 \textit{E-matching}~\cite{e-matching}. E-matching uses patterns based on
@@ -82,7 +82,11 @@ Our system makes defining a series of macros like this very easy.
 length 5, and returns 5 for anything bigger than that. Note how freely the
 Racket \texttt{if} and \texttt{let} forms are mixed into the SMT body. These
 constructs are evaluated at definition time, meaning that this definition
-reduces to the series of macros defined above up to length \texttt{n}.
+reduces to the series of macros defined above up to length \texttt{n}. (At
+this point, the observant reader might have noticed that
+\texttt{smt:define-fun} expands to a universal quantifier as well. However, Z3
+doesn't need MBQI to solve universally quantified assertions equivalent to
+\texttt{define-fun} macros.)
 
 It is easy to define other bounded recursive functions along the same lines
 that reverse lists, concatenate them, filter them on a predicate and much
