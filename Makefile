@@ -4,7 +4,7 @@ all: tfp.pdf
 export TEXINPUTS=.:llncs/:
 export BSTINPUTS=.:llncs/:
 
-tfp.pdf: $(wildcard *.tex) citations.bib
+tfp.pdf: $(wildcard *.tex)  citations.bib
 	pdflatex tfp
 	bibtex tfp
 	pdflatex tfp
