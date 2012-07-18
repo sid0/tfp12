@@ -42,11 +42,9 @@ Z3_ast not_p = Z3_mk_not(ctx, p);
 
 Z3_ast args[2] = {p, not_p};
 Z3_ast conjecture = Z3_mk_and(ctx, 2, args);
-
 Z3_assert_cnstr(ctx, conjecture);
 
 Z3_lbool sat = Z3_check(ctx);
-
 Z3_del_context(ctx);
 return sat;
 \end{verbatim}
@@ -65,9 +63,10 @@ use in isolation. The same program in SMT-LIB would look something like
 \end{verbatim}
 
 However, the SMT-LIB interfaces are generally hard to use directly from C
-programs and often not as full-featured\footnote{Z3, for instance, supports
+programs and often not as full-featured or extensible as
+corresponding  C APIs\footnote{Z3, for instance, supports
 plugging in external theories via the C API, but not via the textual SMT-LIB
-interface.}  or extensible. Importantly, it is difficult to write programs
+interface.}. Importantly, it is difficult to write programs
 that \textit{interact} with the solver in some way, for example by adding
 assertions based on generated models. This makes it difficult to build new
 abstractions to enhance functionality.
@@ -92,15 +91,24 @@ version.
  (smt:check-sat))
 \end{verbatim}
 
+It is important to note that we are neither increasing the
+power of the Z3 SMT solver, nor adding any new features to
+it. We are providing a new interface in Racket so that the
+solver can be used from within the Racket language with much
+ease. This itself is an interesting, challenging and useful
+task as the rest of the paper demonstrates.
+
 \section{Interactive SMT solving}
 \label{sec:interactive}
 
-We now turn our attention to a problem that demonstrates how the interaction of
-a language with an SMT solver is useful. A Sudoku puzzle asks the player to
-complete a partially pre-filled 9$\times$9 grid with the numbers 1 through 9
-such that no row, column, or 3$\times$3 box has two instances of a number. This
-is a classic constraint satisfaction problem, and any constraint solver can
-handle it with ease.
+We first  turn our attention  to a problem  that demonstrates
+how  the interaction  of a  language  with an  SMT solver  is
+useful.  A  Sudoku  puzzle  asks  the player  to  complete  a
+partially  pre-filled  9$\times$9  grid  with the  numbers  1
+through 9 such that no row, column, or 3$\times$3 box has two
+instances  of   a  number.  This  is   a  classic  constraint
+satisfaction problem, and any constraint solver can handle it
+with ease.
 
 A Racket program using \texttt{z3.rkt} to solve Sudoku would look like the
 following:
