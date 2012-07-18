@@ -23,7 +23,7 @@ here is to hide the complexities of the C wrapper and stay as close to SMT-LIB
 version 2 commands \cite{smtlib2:10} as possible. We prefix commands with
 \texttt{smt:} to avoid collisions with Racket functions.
 
-\subsection{Derived Abstractions}
+\subsection{Deriving Abstractions}
 \label{sec:derived}
 
 Since the full power of Racket is available to us, we can define abstractions
@@ -88,11 +88,11 @@ The \texttt{smt:with-context} macro uses another of Racket's abstractions,
 \textit{parameters}, to ensure that the Z3 context remains valid for the
 macro's \textit{dynamic extent}~\cite{delimitedcontrol}. In particular, the
 context is garbage collected only once either the computation is finished or
-the server times out. By surrounding just the first part of a computation with
-\texttt{smt:with-context}, the user can insert arbitrary calls to Z3 at any
-point during the computation without losing context. The details of state
-preservation are hidden from the user, and from our personal experience the
-resulting code tends to be quite elegant.
+(in case of a web server) it times out. By surrounding just the first part of
+a computation with \texttt{smt:with-context}, the user can insert arbitrary
+calls to Z3 at any point during the computation without losing context. The
+details of state preservation are hidden from the user, and in our experience
+the resulting code tends to be quite elegant.
 
 \subsection{Porting Existing SMT-LIB Code}
 \label{sec:porting-smt-lib}
