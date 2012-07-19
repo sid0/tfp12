@@ -6,13 +6,10 @@ that interface with the Z3 engine via the provided library. Since the system is
 still a work in progress, some of these details might change in the future.
 
 \subsubsection{The Z3 wrapper.} We use Racket's foreign interface \cite{racket/foreign}
-to map the Z3 library's C functions into Racket. The programmer interface
+to map the Z3 library's C functions into Racket. The high-level interface
 communicates with Z3 by calling the Racket functions defined by the
 wrapper. While it is possible to use the Z3 wrapper directly, we highly
-recommend using the programmer interface instead.
-
-\ak{programmer interface - To be Defined}
-
+recommend using the high-level interface instead.
 
 \subsubsection{Built-in functions.} Z3 comes with a number of built-in functions that
 operate on booleans, numbers, and more complex values. We expose these
@@ -75,8 +72,8 @@ following way.
                    (ite (> a b) a b))))
 \end{verbatim}
 
-\ak{Using  this  technique,}  we  finally solved  the  problem  \ak{of
-defining macros in our interface} by providing a Racket macro,
+Using  this  technique,  we  finally solved  the  problem  of
+defining macros in our interface by providing a Racket macro,
 \texttt{smt:define-fun},  that  has the  same  syntax as  the
 SMT-LIB command  and that outputs  the equivalent universally
 quantified formula.
@@ -92,23 +89,15 @@ for a client response, so our interface ought to be continuation-safe.
 The \texttt{smt:with-context} macro  uses another of Racket's
 abstractions,  dynamic  binding  via \textit{parameters},  to
 ensure  that the  Z3 context  remains valid  for  the macro's
-\textit{dynamic      extent}~\cite{delimitedcontrol}.
-\sid{In particular, the
-context is garbage collected only once either the computation is finished or
-(in case of a web server) it times out waiting for a client
-response.}
-%%
-\ak{In
+\textit{dynamic      extent}~\cite{delimitedcontrol}. In
 particular,  for the  case of  a web  server, the  context is
-garbage collected  only once  either when the  computation is
-finished,  or when the  computation times  out waiting  for a
-client  response.} By  surrounding just  the first  part  of a
+garbage collected  only once  either the  computation is
+finished,  or it times  out waiting  for a
+client  response. By  surrounding just  the first  part  of a
 computation  with  \texttt{smt:with-context},  the  user  can
 insert  arbitrary  calls  to  Z3  at  any  point  during  the
 computation  without  losing context.  The  details of  state
-preservation are hidden from  the user, and 
-%%in our experience
-the resulting code tends to be quite elegant.
+preservation are hidden from  the user, and  the resulting code tends to be quite elegant.
 
 \subsection{Porting Existing SMT-LIB Code}
 \label{sec:porting-smt-lib}
